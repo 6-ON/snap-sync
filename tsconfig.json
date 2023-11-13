@@ -1,0 +1,15 @@
+{
+	"compilerOptions": {
+		"allowSyntheticDefaultImports": true,
+        "strict": true,
+		"module": "commonjs",
+		"target": "es5",
+		"noImplicitAny": false,
+        "skipLibCheck": true,
+        "baseUrl": "./",
+		"sourceMap": false,
+		"outDir": "./dist"
+	},
+	"include": ["src/**/*.ts"],
+	"exclude": ["node_modules", "**/*.spec.ts"]
+}
