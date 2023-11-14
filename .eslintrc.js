@@ -23,5 +23,6 @@ module.exports = {
 	plugins: ["@typescript-eslint", "prettier"],
 	rules: {
 		indent: ["error", "tab"],
+		"@typescript-eslint/no-unused-vars": "warn",
 	},
 };
