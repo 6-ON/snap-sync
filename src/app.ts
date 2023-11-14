@@ -1,6 +1,6 @@
-import express from "express";
+import express, { Application } from "express";
 import router from "./routes";
-const app = express();
+const app: Application = express();
 app.use(router);
 
 export default app;
