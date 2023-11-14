@@ -1,8 +1,8 @@
-import { Router } from 'express';
+import { Router } from "express";
 import postsRouter from "./posts";
 
-const router = Router()
+const router = Router();
 
-router.use('/posts', postsRouter)
+router.use("/posts", postsRouter);
 
-export default router
+export default router;
