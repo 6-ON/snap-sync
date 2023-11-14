@@ -2,12 +2,12 @@
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
 		"esModuleInterop": true,
-        "strict": true,
+		"strict": true,
 		"module": "commonjs",
 		"target": "es5",
 		"noImplicitAny": false,
-        "skipLibCheck": true,
-        "baseUrl": "./",
+		"skipLibCheck": true,
+		"baseUrl": "./",
 		"sourceMap": false,
 		"outDir": "./dist"
 	},
