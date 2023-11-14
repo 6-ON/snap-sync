@@ -1,5 +1,4 @@
-import express, { Request, Response } from 'express'
+import express from "express";
 
-const app = express()
-
-export default app
+const app = express();
+export default app;
