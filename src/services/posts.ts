@@ -1,20 +1,23 @@
+// import { PostDTO } from "src/dto";
+// import { Schema, model} from 'mongoose';
+
 import { PostDTO } from "src/dto";
+import { Post } from "../models";
 
 export class PostService {
-	static async findAll() {
-		return [
-			{
-				content: "Hello World",
-				id: 1,
-				title: "Hello",
-				image: "https://picsum.photos/200/300",
-				likes: 0,
-				tags: ["hello", "world"],
-			},
-		];
+	static async findAll() {}
+	static async create(post: PostDTO) {
+		try {
+			return await Post.create(post);
+		} catch (err) {
+			return err;
+		}
 	}
-	async delete(id: string) {
-		throw new Error("Function not implemented.");
+	static async delete(post: PostDTO) {
+		try {
+			return await Post.create(post);
+		} catch (err) {
+			return err;
+		}
 	}
-	findAll?: (() => Promise<PostDTO[]>) | undefined;
 }
