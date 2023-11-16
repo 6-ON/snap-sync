@@ -15,8 +15,12 @@ db.once("close", () => {
 });
 
 // ------Connect to MongoDB------
-const { MONGODB_URI } = process.env;
+const { MONGODB_URI, MONGODB_URI_TEST, RUNTIME_MODE } = process.env;
 
 (async () => {
-	await connect(MONGODB_URI!);
+	await connect(
+		RUNTIME_MODE?.toLocaleUpperCase() === "TEST"
+			? MONGODB_URI_TEST!
+			: MONGODB_URI!,
+	);
 })();
