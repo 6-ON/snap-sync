@@ -17,9 +17,16 @@ export class PostService {
 		}
 	}
 	static async update(id: string, updates: PostDTO) {
-		const post = Post.findByIdAndUpdate(id, updates, { new: true });
-		if (!post) throw new NotFound(JSON.stringify("Post not found"));
-		return post;
+		try {
+			const post = await Post.findByIdAndUpdate(id, updates, { new: true });
+			if (!post) throw new NotFound("Post not found");
+			return post;
+		} catch (err) {
+			if (err instanceof Error.CastError) {
+				throw new BadRequest("Invalid id");
+			}
+			throw err;
+		}
 	}
 	static async show(id: string) {
 		try {
