@@ -8,6 +8,15 @@ export class PostController {
 	static async index(req: Request, res: Response) {
 		return res.status(200).json(await PostService.findAll());
 	}
+	static async show(req: Request, res: Response) {
+		return res.status(200).json(await PostService.show(req.params.post));
+	}
+	static async update(req: Request, res: Response) {
+		return res
+			.status(200)
+			.json(await PostService.update(req.params.post, req.body));
+	}
+
 	static async create(req: PostRequest, res: Response) {
 		return res.status(201).json(await PostService.create(req.body));
 	}
