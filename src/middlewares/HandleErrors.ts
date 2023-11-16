@@ -23,5 +23,5 @@ export function handleErrors(
 			.send(isJson ? err.message : JSON.stringify(err));
 	}
 
-	return res.status(500).send(err.message);
+	return res.status(500).send(JSON.stringify(err));
 }
