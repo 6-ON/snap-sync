@@ -5,4 +5,6 @@ postsRouter.get("/", PostController.index);
 postsRouter.post("/", PostController.create);
 postsRouter.get("/:post", PostController.show);
 postsRouter.put("/:post", PostController.update);
+postsRouter.delete("/:post", PostController.delete);
+postsRouter.patch("/:post", PostController.like);
 export default postsRouter;

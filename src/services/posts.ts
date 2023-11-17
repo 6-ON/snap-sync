@@ -2,6 +2,7 @@ import { PostDTO } from "src/dto";
 import { Post } from "../models";
 import { Error } from "mongoose";
 import { BadRequest, NotFound } from "http-errors";
+
 export class PostService {
 	static async findAll() {
 		// find all posts
@@ -12,8 +13,9 @@ export class PostService {
 		try {
 			return await Post.create(post);
 		} catch (err) {
-			// return err;
-			throw new BadRequest(JSON.stringify(err));
+			if (err instanceof Error.ValidationError)
+				throw new BadRequest(JSON.stringify(err));
+			throw err;
 		}
 	}
 	static async update(id: string, updates: PostDTO) {
@@ -40,8 +42,18 @@ export class PostService {
 			throw err;
 		}
 	}
-	static async delete(post: PostDTO) {
-		/** @todo delete a post */
+	static async delete(id: string) {
+		const post = await Post.findByIdAndDelete(id);
+		if (!post)
+			throw new NotFound(JSON.stringify("cannot delete unfound Post "));
 	}
-	/** @todo addLike @Saidy_Younes */
+	static async like(id: string) {
+		const post = Post.findOneAndUpdate(
+			{ _id: id },
+			{ $inc: { likes: 1 } },
+			{ new: true },
+		);
+		if (!post) throw new NotFound(JSON.stringify("Post not found"));
+		return post;
+	}
 }
