@@ -20,4 +20,10 @@ export class PostController {
 	static async create(req: PostRequest, res: Response) {
 		return res.status(201).json(await PostService.create(req.body));
 	}
+	static async delete(req: Request, res: Response) {
+		return res.status(201).json(await PostService.delete(req.params.post));
+	}
+	static async like(req: Request, res: Response) {
+		return res.status(200).json(await PostService.like(req.params.post));
+	}
 }
