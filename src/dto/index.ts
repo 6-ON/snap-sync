@@ -1,1 +1,1 @@
-export * from "./postDTO";
+export * from "./PostDTO";
