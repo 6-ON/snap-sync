@@ -1,11 +1,8 @@
 import winston, { Logger, createLogger, format } from "winston";
 const logFormat = format.combine(
-	format.label({ label: "LOGGER" }),
 	format.timestamp(),
-	format.printf(
-		(info) =>
-			`${info.label}  ${info.timestamp}  ${info.level} : ${info.message}`,
-	),
+	format.simple(),
+	format.prettyPrint(),
 );
 export const logger: Logger = createLogger({
 	format: logFormat,
@@ -17,6 +14,10 @@ export const logger: Logger = createLogger({
 		new winston.transports.File({
 			filename: "logs/app.log",
 			level: "info",
+		}),
+		new winston.transports.File({
+			filename: "logs/debug.log",
+			level: "debug",
 		}),
 	],
 });
