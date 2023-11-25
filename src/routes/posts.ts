@@ -20,5 +20,6 @@ postsRouter
 	.delete(PostController.delete);
 
 postsRouter.patch("/:post/like", PostController.like);
+postsRouter.patch("/:post/unlike", PostController.unlike);
 
 export default postsRouter;

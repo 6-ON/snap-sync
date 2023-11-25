@@ -4,4 +4,5 @@ import { IUserModel } from "./user";
 
 export interface IPostModel extends Document<ObjectId>, IPost {
 	creator: IUserModel;
+	likesCount: number;
 }

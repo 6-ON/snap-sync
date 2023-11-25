@@ -2,7 +2,7 @@ import { PostDTO } from "../dto";
 import { Post } from "../models";
 import { Error, ObjectId } from "mongoose";
 import { BadRequest, NotFound } from "http-errors";
-import { IPostModel } from "@/models/types";
+import { IPostModel, IUserModel } from "@/models/types";
 
 export class PostService {
 	static async findAll() {
@@ -54,9 +54,14 @@ export class PostService {
 	static async delete(post: IPostModel) {
 		return await post.deleteOne();
 	}
-	static async like(post: IPostModel) {
-		const count = ++post.likes;
-		post.save();
-		return count;
+	static async like(post: IPostModel, user: IUserModel) {
+		post.likes.addToSet(user._id);
+		await post.save();
+		return post.likesCount;
+	}
+	static async unlike(post: IPostModel, user: IUserModel) {
+		post.likes.pull(user._id);
+		await post.save();
+		return post.likesCount;
 	}
 }

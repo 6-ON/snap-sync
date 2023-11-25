@@ -21,6 +21,9 @@ export class PostController {
 		return res.status(200).json(await PostService.delete(req.post));
 	}
 	static async like(req: Request, res: Response) {
-		return res.status(200).json(await PostService.like(req.post));
+		return res.status(200).json(await PostService.like(req.post, req.user));
+	}
+	static async unlike(req: Request, res: Response) {
+		return res.status(200).json(await PostService.unlike(req.post, req.user));
 	}
 }
