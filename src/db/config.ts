@@ -6,6 +6,7 @@ export const db: Connection = connection;
 
 db.on("error", (err) => {
 	logger.error(err);
+	process.exit(1);
 });
 db.once("open", () => {
 	logger.info("Connected to MongoDB");
@@ -17,10 +18,10 @@ db.once("close", () => {
 // ------Connect to MongoDB------
 const { MONGODB_URI, MONGODB_URI_TEST, RUNTIME_MODE } = process.env;
 
-(async () => {
+export const connectToDb = async () => {
 	await connect(
 		RUNTIME_MODE?.toLocaleUpperCase() === "TEST"
 			? MONGODB_URI_TEST!
 			: MONGODB_URI!,
 	);
-})();
+};
