@@ -1,5 +1,10 @@
 import app from "./app";
+import { connectToDb } from "@/db";
 const port = 5000;
-app.listen(port, () => {
-	console.log(`Listening on port ${port}`);
+
+connectToDb().then(() => {
+	console.log("Connected to database");
+	app.listen(port, () => {
+		console.log(`Listening on port ${port}`);
+	});
 });
