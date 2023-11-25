@@ -1,7 +1,8 @@
-import { PostDTO } from "src/dto";
+import { PostDTO } from "../dto";
 import { Post } from "../models";
-import { Error } from "mongoose";
+import { Error, ObjectId } from "mongoose";
 import { BadRequest, NotFound } from "http-errors";
+import { IPostModel } from "@/models/types";
 
 export class PostService {
 	static async findAll() {
@@ -9,16 +10,16 @@ export class PostService {
 		return await Post.find();
 	}
 	/** @todo  use http-error and mongoose Error.validation error */
-	static async create(post: PostDTO) {
+	static async create(post: PostDTO, creator: ObjectId) {
 		try {
-			return await Post.create(post);
+			return (await Post.create({ ...post, creator })).populate("creator");
 		} catch (err) {
 			if (err instanceof Error.ValidationError)
 				throw new BadRequest(JSON.stringify(err));
 			throw err;
 		}
 	}
-	static async update(id: string, updates: PostDTO) {
+	static async updateById(id: string, updates: Partial<PostDTO>) {
 		try {
 			const post = await Post.findByIdAndUpdate(id, updates, { new: true });
 			if (!post) throw new NotFound("Post not found");
@@ -30,7 +31,10 @@ export class PostService {
 			throw err;
 		}
 	}
-	static async show(id: string) {
+	static async update(post: IPostModel, updates: Partial<PostDTO>) {
+		return await post.updateOne({ $set: updates });
+	}
+	static async one(id: string) {
 		try {
 			const post = await Post.findById(id);
 			if (!post) throw new NotFound("Post not found");
@@ -42,18 +46,17 @@ export class PostService {
 			throw err;
 		}
 	}
-	static async delete(id: string) {
+	static async deleteById(id: string) {
 		const post = await Post.findByIdAndDelete(id);
 		if (!post)
 			throw new NotFound(JSON.stringify("cannot delete unfound Post "));
 	}
-	static async like(id: string) {
-		const post = Post.findOneAndUpdate(
-			{ _id: id },
-			{ $inc: { likes: 1 } },
-			{ new: true },
-		);
-		if (!post) throw new NotFound(JSON.stringify("Post not found"));
-		return post;
+	static async delete(post: IPostModel) {
+		return await post.deleteOne();
+	}
+	static async like(post: IPostModel) {
+		const count = ++post.likes;
+		post.save();
+		return count;
 	}
 }
