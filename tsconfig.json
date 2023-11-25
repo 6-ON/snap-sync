@@ -5,12 +5,20 @@
 		"strict": true,
 		"module": "commonjs",
 		"target": "es5",
+
 		"noImplicitAny": false,
 		"skipLibCheck": true,
-		"baseUrl": "./",
-		"sourceMap": false,
+		"baseUrl": ".",
+		"paths": {
+			"@/*": ["src/*"]
+		},
+		"sourceMap": true,
 		"outDir": "./dist"
 	},
-	"include": ["src/**/*.ts"],
+	"ts-node": {
+		"require": ["tsconfig-paths/register"],
+		"files": true
+	},
+	"include": ["src/**/*"],
 	"exclude": ["node_modules", "**/*.spec.ts"]
 }
