@@ -11,20 +11,22 @@ export function handleErrors(
 	next: NextFunction,
 ) {
 	// --- Log Errors ---
-	logger.error(err.name);
-	logger.error(err.stack);
+	logger.error(err);
+	// --- Check if error has a json message ---
+	const hasJsonMessage = err.message?.startsWith("{");
+
 	// --- Set Headers ---
 	res.setHeader("Content-Type", "application/json");
-	// --- Handle Errors ---
-	if (err instanceof HttpError) {
-		// check if it is a stringified json
-		const isJson = err.message.startsWith("{");
+
+	// --- Handle Http Errors ---
+	if (err instanceof HttpError)
 		return res
 			.status(err.statusCode)
-			.send(isJson ? err.message : JSON.stringify(err));
-	} else if (err[0] instanceof ValidationError) {
+			.send(hasJsonMessage ? err.message : JSON.stringify(err));
+
+	// --- Handle Class Validator Errors ---
+	if (err[0] instanceof ValidationError)
 		return res.status(400).send(JSON.stringify(err));
-	}
 
 	return res.status(500).send(JSON.stringify(err));
 }
