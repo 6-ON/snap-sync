@@ -9,7 +9,6 @@ export class PostService {
 		// find all posts
 		return await Post.find();
 	}
-	/** @todo  use http-error and mongoose Error.validation error */
 	static async create(post: PostDTO, creator: ObjectId) {
 		try {
 			return (await Post.create({ ...post, creator })).populate("creator");
@@ -19,6 +18,7 @@ export class PostService {
 			throw err;
 		}
 	}
+
 	static async updateById(id: string, updates: Partial<PostDTO>) {
 		try {
 			const post = await Post.findByIdAndUpdate(id, updates, { new: true });
