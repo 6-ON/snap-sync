@@ -1,11 +1,13 @@
 {
 	"compilerOptions": {
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true,
+		"strictPropertyInitialization": false,
 		"allowSyntheticDefaultImports": true,
 		"esModuleInterop": true,
 		"strict": true,
 		"module": "commonjs",
-		"target": "es5",
-
+		"target": "ES2017",
 		"noImplicitAny": false,
 		"skipLibCheck": true,
 		"baseUrl": ".",
@@ -19,6 +21,6 @@
 		"require": ["tsconfig-paths/register"],
 		"files": true
 	},
-	"include": ["src/**/*"],
+	"include": ["src/**/*", ".eslintrc.js"],
 	"exclude": ["node_modules", "**/*.spec.ts"]
 }
