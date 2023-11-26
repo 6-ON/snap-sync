@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { DefaultLoginDTO, DefaultRegisterDTO } from "@/dto/auth";
 import { User } from "@/models";
-import { Error } from "mongoose";
+import { Error as MongoError } from "mongoose";
 import argon from "argon2";
 import { BadRequest, UnprocessableEntity } from "http-errors";
 import { TJwtPayload, sign } from "@/utils";
@@ -25,10 +25,7 @@ export class DefaultAuthService {
 
 	static async register(payload: DefaultRegisterDTO) {
 		try {
-			const { confirmPassword, ...cleanedPayload } = payload;
-			const { password, ...user } = (
-				await User.create(cleanedPayload)
-			).toJSON();
+			const { password, ...user } = (await User.create(payload)).toJSON();
 			return {
 				auth: await this.signJWT({
 					sub: user._id,
@@ -38,7 +35,7 @@ export class DefaultAuthService {
 				user,
 			};
 		} catch (error) {
-			if (error instanceof Error.ValidationError)
+			if (error instanceof MongoError.ValidationError)
 				throw new BadRequest(JSON.stringify(error));
 			throw error;
 		}
