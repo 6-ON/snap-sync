@@ -26,5 +26,5 @@ export function handleErrors(
 		return res.status(400).send(JSON.stringify(err));
 	}
 
-	return res.status(500).send(JSON.stringify(typeof err));
+	return res.status(500).send(JSON.stringify(err));
 }
