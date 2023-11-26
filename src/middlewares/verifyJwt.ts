@@ -1,7 +1,6 @@
 import { Response, NextFunction, Request } from "express";
-import { Unauthorized } from "http-errors";
+import { Unauthorized, BadRequest } from "http-errors";
 import { verify } from "../utils";
-import { BadRequest } from "http-errors";
 import { UserService } from "@/services";
 
 export const verifyJwt = async (
