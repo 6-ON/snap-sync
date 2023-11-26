@@ -13,8 +13,11 @@ export class PostController {
 	static async update(req: Request, res: Response) {
 		const payload = new PostDTO();
 		Object.assign(payload, req.body);
+		// return res.status(200).json(payload)
 		await validateOrReject(payload, {
 			skipMissingProperties: true,
+			whitelist: true,
+			forbidNonWhitelisted: true,
 			validationError: { target: false, value: false },
 		});
 		return res.status(200).json(await PostService.update(req.post, payload));
@@ -24,6 +27,8 @@ export class PostController {
 		const payload = new PostDTO();
 		Object.assign(payload, req.body);
 		await validateOrReject(payload, {
+			whitelist: true,
+			forbidNonWhitelisted: true,
 			validationError: { target: false, value: false },
 		});
 		return res
