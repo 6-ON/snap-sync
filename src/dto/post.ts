@@ -1,4 +1,4 @@
-import { IsArray, IsBase64, IsNotEmpty, IsString } from "class-validator";
+import { IsBase64, IsNotEmpty, IsString } from "class-validator";
 
 export class PostDTO {
 	@IsNotEmpty()
