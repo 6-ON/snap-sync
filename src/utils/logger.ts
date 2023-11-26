@@ -1,9 +1,13 @@
 import winston, { Logger, createLogger, format } from "winston";
+
 const logFormat = format.combine(
 	format.timestamp(),
 	format.simple(),
 	format.prettyPrint(),
 );
+
+const infoFilter = format((info) => (info.level === "info" ? info : false));
+
 export const logger: Logger = createLogger({
 	format: logFormat,
 	transports: [
@@ -14,6 +18,7 @@ export const logger: Logger = createLogger({
 		new winston.transports.File({
 			filename: "logs/app.log",
 			level: "info",
+			format: infoFilter(),
 		}),
 		new winston.transports.File({
 			filename: "logs/debug.log",
