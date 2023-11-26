@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { HttpError } from "http-errors";
 import { logger } from "../utils";
+import { ValidationError } from "class-validator";
 
 export function handleErrors(
 	err: Error,
@@ -21,7 +22,9 @@ export function handleErrors(
 		return res
 			.status(err.statusCode)
 			.send(isJson ? err.message : JSON.stringify(err));
+	} else if (err[0] instanceof ValidationError) {
+		return res.status(400).send(JSON.stringify(err));
 	}
 
-	return res.status(500).send(JSON.stringify(err));
+	return res.status(500).send(JSON.stringify(typeof err));
 }

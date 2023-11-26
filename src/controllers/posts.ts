@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import { PostService } from "@/services";
+import { PostDTO } from "@/dto";
+import { validateOrReject } from "class-validator";
 
 export class PostController {
 	static async index(req: Request, res: Response) {
@@ -9,13 +11,24 @@ export class PostController {
 		return res.status(200).json(req.post);
 	}
 	static async update(req: Request, res: Response) {
-		return res.status(200).json(await PostService.update(req.post, req.body));
+		const payload = new PostDTO();
+		Object.assign(payload, req.body);
+		await validateOrReject(payload, {
+			skipMissingProperties: true,
+			validationError: { target: false, value: false },
+		});
+		return res.status(200).json(await PostService.update(req.post, payload));
 	}
 
 	static async create(req: Request, res: Response) {
+		const payload = new PostDTO();
+		Object.assign(payload, req.body);
+		await validateOrReject(payload, {
+			validationError: { target: false, value: false },
+		});
 		return res
 			.status(201)
-			.json(await PostService.create(req.body, req.user._id!));
+			.json(await PostService.create(payload, req.user._id!));
 	}
 	static async delete(req: Request, res: Response) {
 		return res.status(200).json(await PostService.delete(req.post));
