@@ -16,6 +16,6 @@ export const verifyJwt = async (
 	const decoded = await verify(token, process.env.JWT_SECRET!);
 	if (!decoded) throw new Unauthorized();
 	req.decoded = decoded;
-	req.user = await UserService.findOne(decoded.sub!);
+	req.user = await UserService.findById(decoded.sub!);
 	next();
 };

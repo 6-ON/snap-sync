@@ -1,15 +1,10 @@
 import { User } from "../models";
-
+import { NotFound } from "http-errors";
 export class UserService {
-	static async findOne(id: string) {
-		// eslint-disable-next-line no-useless-catch
-		try {
-			const user = await User.findById(id);
-			if (!user) throw new Error("User not found");
-			return user;
-		} catch (error) {
-			throw error;
-		}
+	static async findById(id: string) {
+		const user = await User.findById(id);
+		if (!user) throw new NotFound("User not found");
+		return user;
 	}
 
 	static async findAll() {
