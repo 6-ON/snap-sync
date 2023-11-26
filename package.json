@@ -6,8 +6,8 @@
 	"scripts": {
 		"dev": "nodemon --exec ts-node src/server.ts",
 		"start": "ts-node src/server.ts",
-		"serve": "node dist/server.ts",
-		"build": "tsc",
+		"serve": "node dist/server.js",
+		"build": "tsc && resolve-tspaths",
 		"lint": "prettier --check .",
 		"format": "prettier --write .",
 		"logs:clear": "rm -rf logs/*",
@@ -35,14 +35,17 @@
 		"lint-staged": "^15.1.0",
 		"nodemon": "^3.0.1",
 		"prettier": "^3.1.0",
+		"resolve-tspaths": "^0.8.17",
 		"supertest": "^6.3.3",
 		"ts-jest": "^29.1.1",
 		"ts-node": "^10.9.1",
+		"tsconfig-paths": "^4.2.0",
 		"typescript": "^5.2.2"
 	},
 	"dependencies": {
 		"@types/http-errors": "^2.0.4",
 		"argon2": "^0.31.2",
+		"class-validator": "^0.14.0",
 		"cors": "^2.8.5",
 		"dotenv": "^16.3.1",
 		"express": "^4.18.2",
