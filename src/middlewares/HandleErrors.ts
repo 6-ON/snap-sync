@@ -11,7 +11,7 @@ export function handleErrors(
 	next: NextFunction,
 ) {
 	// --- Log Errors ---
-	logger.error(err);
+	logger.error(`${err}`);
 	// --- Check if error has a json message ---
 	const hasJsonMessage = err.message?.startsWith("{");
 
