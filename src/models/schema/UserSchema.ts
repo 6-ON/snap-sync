@@ -10,7 +10,7 @@ export const userSchema = new Schema<IUserModel>(
 		password: { type: String, required: true },
 		posts: [{ type: Types.ObjectId, ref: "Post" }],
 	},
-	{ timestamps: true },
+	{ timestamps: true, toJSON: { versionKey: false } },
 );
 
 userSchema.pre("save", async function (next) {
