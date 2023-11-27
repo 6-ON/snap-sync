@@ -11,7 +11,7 @@ export class PostService {
 	}
 	static async create(post: PostDTO, creator: ObjectId) {
 		try {
-			return (await Post.create({ ...post, creator })).populate("creator");
+			return await Post.create({ ...post, creator });
 		} catch (err) {
 			if (err instanceof Error.ValidationError)
 				throw new BadRequest(JSON.stringify(err));
