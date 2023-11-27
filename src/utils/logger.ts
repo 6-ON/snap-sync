@@ -1,10 +1,6 @@
 import winston, { Logger, createLogger, format } from "winston";
 
-const logFormat = format.combine(
-	format.timestamp(),
-	format.simple(),
-	format.prettyPrint(),
-);
+const logFormat = format.combine(format.timestamp(), format.prettyPrint());
 
 const infoFilter = format((info) => (info.level === "info" ? info : false));
 
