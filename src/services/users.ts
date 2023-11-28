@@ -2,7 +2,7 @@ import { User } from "../models";
 import { NotFound } from "http-errors";
 export class UserService {
 	static async findById(id: string) {
-		const user = await User.findById(id);
+		const user = await User.findById(id).select(["-password", "-posts"]);
 		if (!user) throw new NotFound("User not found");
 		return user;
 	}
