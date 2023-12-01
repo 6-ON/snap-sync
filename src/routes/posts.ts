@@ -15,7 +15,6 @@ postsRouter.post("/", PostController.create);
 postsRouter
 	.route("/:post")
 	.all(requirePostOwner)
-	.get(PostController.show)
 	.put(PostController.update)
 	.delete(PostController.delete);
 
