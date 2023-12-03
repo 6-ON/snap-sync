@@ -22,9 +22,13 @@ postSchema.virtual("likesCount").get(function (this: IPostModel) {
 
 postSchema.pre("find", function (next) {
 	this.populate("creator", ["name", "email", "image"]);
+	this.sort({ createdAt: -1 });
 	next();
 });
 postSchema.pre("findOne", function (next) {
 	this.populate("creator", ["name", "email", "image"]);
 	next();
+});
+postSchema.post("save", async function name() {
+	await this.populate("creator", ["name", "email", "image"]);
 });
