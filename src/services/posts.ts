@@ -57,11 +57,11 @@ export class PostService {
 	static async like(post: IPostModel, user: IUserModel) {
 		post.likes.addToSet(user._id);
 		await post.save();
-		return post.likesCount;
+		return post.likes;
 	}
 	static async unlike(post: IPostModel, user: IUserModel) {
 		post.likes.pull(user._id);
 		await post.save();
-		return post.likesCount;
+		return post.likes;
 	}
 }
